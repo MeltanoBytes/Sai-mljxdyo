@@ -1,0 +1,68 @@
+{
+  "plugin_type": "extractors",
+  "name": "tap-govuk-weekly-road-fuel-prices",
+  "namespace": "tap_govuk_weekly_road_fuel_prices",
+  "variant": "matatika",
+  "label": "Weekly road fuel prices",
+  "docs": "https://www.matatika.com/data-details/tap-govuk-weekly-road-fuel-prices/",
+  "repo": "https://github.com/Matatika/tap-spreadsheets-anywhere",
+  "pip_url": "git+https://github.com/Matatika/tap-spreadsheets-anywhere.git@v0.7.2",
+  "executable": "tap-spreadsheets-anywhere",
+  "description": "Road fuel price statistics providing average UK retail 'pump' prices on a weekly basis.\n\n## Learn more\n\n[Weekly road fuel prices](https://www.gov.uk/government/statistics/weekly-road-fuel-prices)\n### Enable BATCH mode for large syncs (optional)\nInstead of one record message per row, the tap can buffer rows and write them to Arrow IPC files, then emit batch messages that reference them - a compatible target loads these files directly instead of processing records one at a time. Set Batch Format, Batch Root Directory and Batch Size to enable it.\nCaveats: `arrow` is the only batch encoding this tap supports; only a target that advertises the `batch` capability processes batch messages, so leave these settings unset for any other target. Enabling BATCH mode does not otherwise change the schema seen downstream - add `\"arrow_native_timestamps\": false` to a table entry in Tables to keep its `date-time` columns as strings instead of native Arrow timestamps (the default), for a table with non-ISO-8601 date formatting.",
+  "logo_url": "https://www.gov.uk/assets/government-frontend/national-statistics-21661e9982d6f605259af3673ea887a18ecd817763b1a62b154d3551a1f1d1b2.png",
+  "capabilities": [
+    "batch",
+    "catalog",
+    "discover",
+    "state"
+  ],
+  "settings": [
+    {
+      "name": "tables",
+      "kind": "array",
+      "value": "[\n  {\n    \"path\":\"https://assets.publishing.service.gov.uk/media/6a8c63a808705e34a95daa78/\",\n    \"name\":\"weekly_fuel_prices\",\n    \"pattern\":\"CSV__2018_-__.csv\",\n    \"field_names\":[\"Date\",\"ULSP_per_litre\",\"ULSD_per_litre\",\"ULSP_duty\",\"ULSD_duty\",\"ULSP_vat_pc\",\"ULSD_vat_pc\"],\n    \"start_date\":\"2018-01-01T00:00:00Z\",\n    \"skip_initial\": 1,\n    \"key_properties\":[\"Date\"],\n    \"format\":\"csv\"\n  },\n  {\n    \"path\":\"https://assets.publishing.service.gov.uk/media/65a5612e867cd8000d5ae8f0/\",\n    \"name\":\"weekly_fuel_prices_2003_to_2017\",\n    \"pattern\":\"weekly_fuel_prices_2003_to_2017.csv\",\n    \"field_names\":[\"Date\",\"ULSP_per_litre\",\"ULSD_per_litre\",\"ULSP_duty\",\"ULSD_duty\",\"ULSP_vat_pc\",\"ULSD_vat_pc\"],\n    \"start_date\":\"2003-09-06T00:00:00Z\",\n    \"skip_initial\": 1,\n    \"key_properties\":[\"Date\"],\n    \"format\":\"csv\"\n  }\n]",
+      "label": "Tables",
+      "description": "A collection of related data organized in rows and columns.",
+      "hidden": false,
+      "sensitive": false,
+      "configured": false,
+      "protected": false
+    },
+    {
+      "name": "batch_config.encoding.format",
+      "kind": "options",
+      "label": "Batch Format",
+      "description": "Format of the batch files. This tap only supports Arrow.",
+      "options": [
+        {
+          "label": "Arrow",
+          "value": "arrow"
+        }
+      ],
+      "hidden": false,
+      "sensitive": false,
+      "configured": false,
+      "protected": false
+    },
+    {
+      "name": "batch_config.storage.root",
+      "kind": "string",
+      "label": "Batch Root Directory",
+      "description": "The root directory where the batch files will be stored. Defaults to the system's temporary directory if not specified.",
+      "hidden": true,
+      "sensitive": false,
+      "configured": false,
+      "protected": false
+    },
+    {
+      "name": "batch_config.batch_size",
+      "kind": "integer",
+      "label": "Batch Size",
+      "description": "Number of rows per BATCH message file. Defaults to 100,000 if not specified.",
+      "hidden": false,
+      "sensitive": false,
+      "configured": false,
+      "protected": false
+    }
+  ]
+}

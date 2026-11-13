@@ -29,6 +29,7 @@ The organisation's industry is in `analyze/datasets/organisation-context.yml` (i
 
 ## Plugins
 
+- extractor `tap-govuk-weekly-road-fuel-prices` (matatika) — `git+https://github.com/Matatika/tap-spreadsheets-anywhere.git@v0.7.2`
 - file `analyze-dbt-models` (matatika) — `git+https://github.com/Matatika/analyze-dbt-models@v0.4.0`
 - file `files-context-financial-services` (matatika) — `git+https://github.com/meltano/files-context-financial-services.git@v0.1.2`
 - file `files-dbt` (matatika) — `git+https://github.com/Matatika/files-dbt@v1.6.2`
@@ -46,6 +47,14 @@ The organisation's industry is in `analyze/datasets/organisation-context.yml` (i
 - **Schedule:** none
 - **Data components:** `dbt` (dbt, dbt-labs) → `dbt-artifacts` (dbt-artifacts, matatika) → `matatika` (matatika, matatika)
 - **Actions:** `dbt:deps`, `dbt:docs-generate`, `dbt-artifacts:convert-matatika`, `matatika:publish`
+- **Timeout:** 3600s
+- **Max retries:** 0
+
+### Weekly road fuel prices (`weekly-road-fuel-prices`)
+
+- **Type:** INGESTION
+- **Schedule:** none
+- **Data components:** `tap-govuk-weekly-road-fuel-prices--weekly-road-fuel-prices` (tap-govuk-weekly-road-fuel-prices, matatika) → `Warehouse` (target-postgres, matatika)
 - **Timeout:** 3600s
 - **Max retries:** 0
 

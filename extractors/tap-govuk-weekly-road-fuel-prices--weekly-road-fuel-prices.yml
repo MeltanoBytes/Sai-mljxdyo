@@ -1,0 +1,7 @@
+plugins:
+  extractors:
+  - name: tap-govuk-weekly-road-fuel-prices--weekly-road-fuel-prices
+    inherit_from: tap-govuk-weekly-road-fuel-prices
+    annotations:
+      meltano-cloud:
+        ingestion: weekly-road-fuel-prices
