@@ -55,6 +55,7 @@ The organisation's industry is in `analyze/datasets/organisation-context.yml` (i
 - **Type:** INGESTION
 - **Schedule:** none
 - **Data components:** `tap-govuk-weekly-road-fuel-prices--weekly-road-fuel-prices` (tap-govuk-weekly-road-fuel-prices, matatika) → `Warehouse` (target-postgres, matatika)
+- **Tables loaded:** `analytics.weekly_fuel_prices`, `analytics.weekly_fuel_prices_2003_to_2017`
 - **Timeout:** 3600s
 - **Max retries:** 0
 
